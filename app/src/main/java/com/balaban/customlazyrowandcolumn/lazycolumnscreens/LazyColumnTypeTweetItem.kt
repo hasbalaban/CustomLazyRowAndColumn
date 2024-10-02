@@ -1,7 +1,6 @@
 package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,8 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +30,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
+import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
 fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
@@ -62,14 +60,8 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
                         fontWeight = FontWeight.Bold
                     )
 
-                    Icon(
-                        imageVector = Icons.Filled.Check, // Replace with the verified icon
-                        contentDescription = "Verified",
-                        tint = Color.Blue,
-                        modifier = Modifier
-                            .size(16.dp)
-                            .padding(start = 4.dp)
-                    )
+
+                    VerifiedImage(modifier = Modifier.size(16.dp))
 
                     Text(
                         text = "@cnbceofficial · 1h",
@@ -100,7 +92,9 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
                             imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
                             contentDescription = "Image Placeholder",
                             tint = Color.Black.copy(0.5f),
-                            modifier = Modifier.padding(24.dp).size(32.dp)
+                            modifier = Modifier
+                                .padding(24.dp)
+                                .size(32.dp)
                         )
 
                         VerticalDivider(
@@ -110,7 +104,7 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
 
                         Spacer(modifier = Modifier.width(8.dp))
 
-                        Column(modifier = Modifier.padding(top = 16.dp)){
+                        Column(modifier = Modifier.padding(top = 16.dp)) {
                             Text(
                                 text = "ECB/Guindos: Euro Bölgesi'nde toparlanma z...",
                                 color = Color.Black

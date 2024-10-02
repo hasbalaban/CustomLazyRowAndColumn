@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
+import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import kotlin.random.Random
 
 @Composable
@@ -69,7 +70,6 @@ fun LazyColumnTypeAddItem(item: AddScreenItem) {
         Row(
             modifier = Modifier
                 .padding(vertical = 8.dp)
-                .padding(start = 40.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .horizontalScroll(state = scrollState)
                 .fillMaxWidth(),

@@ -22,17 +22,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeAddItem
-import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeBannerItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeQuoteTweetItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeSplitScreenItem
-import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTextItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTweetItem
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
-import com.balaban.customlazyrowandcolumn.models.BannerScreenItem
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
-import com.balaban.customlazyrowandcolumn.models.TextItem
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.ui.theme.CustomLazyRowAndColumnTheme
 
@@ -84,23 +80,25 @@ val items = listOf(
     AddScreenItem(image = R.drawable.image),
     AddScreenItem(image = R.drawable.image),
 
-    SplitScreenItem(image = R.drawable.image),
-    SplitScreenItem(image = R.drawable.image),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben)),
 
     TweetScreenItem(text = "R.drawable.image"),
     TweetScreenItem(text = "R.drawable.image"),
     TweetScreenItem(text = "R.drawable.image"),
 
-    BannerScreenItem(text = "Custom List Banner"),
-
-    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
-    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben)),
 )
 
 @Composable
 fun ListWithDifferentContentTypes() {
     val list by remember {
-        mutableStateOf(items.shuffled())
+        mutableStateOf(items.shuffled().shuffled())
     }
     LazyColumn{
         itemsIndexed(
@@ -109,11 +107,6 @@ fun ListWithDifferentContentTypes() {
         ) { index, item ->
 
             when (item.type) {
-                ContentTypes.TYPE_TEXT -> {
-                    Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeTextItem(item = item as TextItem)
-                    }
-                }
 
                 ContentTypes.TYPE_ADD_ITEM -> {
                     Box(modifier = Modifier.padding(start = 12.dp, end = 6.dp)) {
@@ -123,12 +116,11 @@ fun ListWithDifferentContentTypes() {
 
                 ContentTypes.TYPE_SPLITTED_SCREEN -> {
                     Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeSplitScreenItem(item = item as SplitScreenItem)
+                        LazyColumnTypeSplitScreenItem(
+                            item = item as SplitScreenItem,
+                            isQuoteItem = false
+                        )
                     }
-                }
-
-                ContentTypes.TYPE_BANNER_SCREEN -> {
-                    LazyColumnTypeBannerItem(item = item as BannerScreenItem)
                 }
 
                 ContentTypes.TYPE_TWEET_SCREEN -> {
@@ -143,23 +135,18 @@ fun ListWithDifferentContentTypes() {
                 }
             }
 
-            val shouldShowBanner =
-                list.getOrNull(index + 1)?.type == ContentTypes.TYPE_BANNER_SCREEN || item.type == ContentTypes.TYPE_BANNER_SCREEN
-
-            if (index < list.size - 1 && !shouldShowBanner) {
+            if (index < list.size - 1) {
                 HorizontalDivider(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp), color = Color.Gray.copy(alpha = 0.2f), thickness = 1.dp)
+                    .padding(vertical = 8.dp), color = Color.Gray.copy(alpha = 0.2f), thickness = 1.dp)
             }
         }
     }
 }
 
 enum class ContentTypes {
-    TYPE_TEXT,
     TYPE_ADD_ITEM,
     TYPE_SPLITTED_SCREEN,
-    TYPE_BANNER_SCREEN,
     TYPE_TWEET_SCREEN,
     TYPE_QUOTE_TWEET_SCREEN,
 }
