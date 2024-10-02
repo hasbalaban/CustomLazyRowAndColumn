@@ -17,6 +17,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,9 +66,11 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
                     Image(
                         imageVector = Icons.Filled.Check,
                         contentDescription = "Verified",
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier
+                            .size(16.dp)
                             .clip(CircleShape)
-                            .background(Color(0xff1d9bf0)).padding(2.dp),
+                            .background(Color(0xff1d9bf0))
+                            .padding(2.dp),
                         colorFilter = ColorFilter
                             .tint(Color.White)
                     )
@@ -101,7 +106,15 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
                     .padding(12.dp)
             ) {
 
-                LazyColumnTypeSplitScreenItem(SplitScreenItem(listOf(R.drawable.image)), isQuoteItem = true)
+                val list by remember {
+                    mutableStateOf(mutableListOf<Int>())
+                }
+
+                for (i in 0..<item.imageList.size) {
+                    list.add(R.drawable.image)
+                }
+
+                LazyColumnTypeSplitScreenItem(SplitScreenItem(list), isQuoteItem = true)
 
             }
 
