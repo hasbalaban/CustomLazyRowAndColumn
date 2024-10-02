@@ -35,6 +35,7 @@ import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTextIt
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
 import com.balaban.customlazyrowandcolumn.models.BannerScreenItem
 import com.balaban.customlazyrowandcolumn.models.HeaderItem
+import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.models.TextItem
 import com.balaban.customlazyrowandcolumn.ui.theme.CustomLazyRowAndColumnTheme
@@ -83,12 +84,16 @@ abstract class ViewHolder<T>()  {
     open fun onDetachAdapter() {}
 }
 
-open class ItemType (val type: ContentTypes)
-
 
 val items = listOf(
     AddScreenItem(image = R.drawable.image),
+    AddScreenItem(image = R.drawable.image),
     SplitScreenItem(image = R.drawable.image),
+    SplitScreenItem(image = R.drawable.image),
+    HeaderItem(
+        header = "HeaderItem 1",
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    ),
     HeaderItem(
         header = "HeaderItem 1",
         description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -99,7 +104,7 @@ val items = listOf(
 @Composable
 fun ListWithDifferentContentTypes() {
     val list by remember {
-        mutableStateOf((items + items + items + items))
+        mutableStateOf((items + items + items))
     }
     LazyColumn{
         itemsIndexed(
