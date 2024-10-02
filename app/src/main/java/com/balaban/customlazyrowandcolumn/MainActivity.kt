@@ -23,12 +23,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeAddItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeBannerItem
+import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeQuoteTweetItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeSplitScreenItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTextItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTweetItem
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
 import com.balaban.customlazyrowandcolumn.models.BannerScreenItem
 import com.balaban.customlazyrowandcolumn.models.ItemType
+import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.models.TextItem
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
@@ -90,6 +92,9 @@ val items = listOf(
     TweetScreenItem(text = "R.drawable.image"),
 
     BannerScreenItem(text = "Custom List Banner"),
+
+    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
+    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
 )
 
 @Composable
@@ -131,6 +136,11 @@ fun ListWithDifferentContentTypes() {
                         LazyColumnTypeTweetItem(item = item as TweetScreenItem)
                     }
                 }
+                ContentTypes.TYPE_QUOTE_TWEET_SCREEN -> {
+                    Box(modifier = Modifier.padding(horizontal = 12.dp)) {
+                        LazyColumnTypeQuoteTweetItem(item = item as QuoteTweetScreenItem)
+                    }
+                }
             }
 
             val shouldShowBanner =
@@ -150,5 +160,6 @@ enum class ContentTypes {
     TYPE_ADD_ITEM,
     TYPE_SPLITTED_SCREEN,
     TYPE_BANNER_SCREEN,
-    TYPE_TWEET_SCREEN
+    TYPE_TWEET_SCREEN,
+    TYPE_QUOTE_TWEET_SCREEN,
 }

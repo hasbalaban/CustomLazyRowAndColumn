@@ -10,3 +10,4 @@ data class AddScreenItem(@DrawableRes val image: Int) : ItemType(ContentTypes.TY
 data class SplitScreenItem(@DrawableRes val image: Int) : ItemType(ContentTypes.TYPE_SPLITTED_SCREEN)
 data class BannerScreenItem(val text: String) : ItemType(ContentTypes.TYPE_BANNER_SCREEN)
 data class TweetScreenItem(val text: String) : ItemType(ContentTypes.TYPE_TWEET_SCREEN)
+data class QuoteTweetScreenItem(val text: String) : ItemType(ContentTypes.TYPE_QUOTE_TWEET_SCREEN)
