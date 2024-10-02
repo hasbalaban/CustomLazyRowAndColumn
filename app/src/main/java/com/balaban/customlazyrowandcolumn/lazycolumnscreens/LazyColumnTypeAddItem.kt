@@ -30,6 +30,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
+import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import kotlin.random.Random
 
 @Composable

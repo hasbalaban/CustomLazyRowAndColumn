@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.R
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
+import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
@@ -42,14 +43,7 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
     ) {
         // Header Row
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = R.drawable.ben),
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.FillBounds
-            )
+            ProfileItem()
 
             Spacer(modifier = Modifier.width(8.dp))
 

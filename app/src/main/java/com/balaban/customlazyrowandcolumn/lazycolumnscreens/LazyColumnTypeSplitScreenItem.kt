@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.R
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
+import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
@@ -36,14 +37,7 @@ fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
         Row(
             modifier = Modifier.padding(start = if (isQuoteItem) 12.dp else 0.dp),
             verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = R.drawable.ben),
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.FillBounds
-            )
+            ProfileItem()
 
             Spacer(modifier = Modifier.width(8.dp))
 
