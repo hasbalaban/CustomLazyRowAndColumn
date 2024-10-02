@@ -82,8 +82,10 @@ val items = listOf(
     AddScreenItem(image = R.drawable.image),
     AddScreenItem(image = R.drawable.image),
 
-    SplitScreenItem(image = R.drawable.image),
-    SplitScreenItem(image = R.drawable.image),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben)),
+    SplitScreenItem(imageList = listOf(R.drawable.ben)),
 
     TweetScreenItem(text = "R.drawable.image"),
     TweetScreenItem(text = "R.drawable.image"),
@@ -91,14 +93,16 @@ val items = listOf(
 
     BannerScreenItem(text = "Custom List Banner"),
 
-    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
-    QuoteTweetScreenItem(text = "QuoteTweetScreenItem"),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben,R.drawable.ben)),
+    QuoteTweetScreenItem(imageList = listOf(R.drawable.ben)),
 )
 
 @Composable
 fun ListWithDifferentContentTypes() {
     val list by remember {
-        mutableStateOf(items.shuffled())
+        mutableStateOf(items.shuffled().shuffled())
     }
     LazyColumn{
         itemsIndexed(
@@ -116,7 +120,10 @@ fun ListWithDifferentContentTypes() {
 
                 ContentTypes.TYPE_SPLITTED_SCREEN -> {
                     Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeSplitScreenItem(item = item as SplitScreenItem)
+                        LazyColumnTypeSplitScreenItem(
+                            item = item as SplitScreenItem,
+                            isQuoteItem = false
+                        )
                     }
                 }
 
