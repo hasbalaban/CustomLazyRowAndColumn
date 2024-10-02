@@ -3,7 +3,6 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +19,11 @@ fun LazyColumnTypeBannerItem(item: BannerScreenItem) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(vertical = 12.dp)
             .background(brush = Brush.horizontalGradient(
                 colors = listOf(Color.Blue, Color.Green)
             ))
-            .padding(vertical = 20.dp),
+            .padding(vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
