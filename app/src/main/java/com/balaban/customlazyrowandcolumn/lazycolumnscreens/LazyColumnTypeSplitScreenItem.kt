@@ -37,6 +37,7 @@ fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
         Row(
             modifier = Modifier.padding(start = if (isQuoteItem) 12.dp else 0.dp),
             verticalAlignment = Alignment.CenterVertically) {
+
             ProfileItem()
 
             Spacer(modifier = Modifier.width(8.dp))

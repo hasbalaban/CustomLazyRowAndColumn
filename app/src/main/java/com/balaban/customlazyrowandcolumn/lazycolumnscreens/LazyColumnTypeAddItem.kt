@@ -70,7 +70,6 @@ fun LazyColumnTypeAddItem(item: AddScreenItem) {
         Row(
             modifier = Modifier
                 .padding(vertical = 8.dp)
-                .padding(start = 40.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .horizontalScroll(state = scrollState)
                 .fillMaxWidth(),
