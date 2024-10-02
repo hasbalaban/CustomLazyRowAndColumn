@@ -20,9 +20,11 @@ fun LazyColumnTypeBannerItem(item: BannerScreenItem) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp)
-            .background(brush = Brush.horizontalGradient(
-                colors = listOf(Color.Blue, Color.Green)
-            ))
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(Color.Blue, Color.Green)
+                )
+            )
             .padding(vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {

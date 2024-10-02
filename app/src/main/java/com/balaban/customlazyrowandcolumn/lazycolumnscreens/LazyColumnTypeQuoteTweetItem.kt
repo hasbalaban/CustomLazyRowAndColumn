@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.R
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
+import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
 fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
@@ -55,7 +54,7 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
             Spacer(modifier = Modifier.width(8.dp))
 
             Column {
-                Row(verticalAlignment = Alignment.CenterVertically){
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Hesen B.",
                         color = Color.Black,
@@ -63,17 +62,8 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
                     )
 
                     Spacer(modifier = Modifier.width(4.dp))
-                    Image(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = "Verified",
-                        modifier = Modifier
-                            .size(16.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xff1d9bf0))
-                            .padding(2.dp),
-                        colorFilter = ColorFilter
-                            .tint(Color.White)
-                    )
+
+                    VerifiedImage(modifier = Modifier.size(16.dp))
 
                     Spacer(modifier = Modifier.width(4.dp))
 
@@ -103,7 +93,7 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp))
-                    .padding(12.dp)
+                    .padding(top = 12.dp)
             ) {
 
                 val list by remember {

@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,12 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.R
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
+import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
 fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
     Column {
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.padding(start = if (isQuoteItem) 12.dp else 0.dp),
+            verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = R.drawable.ben),
                 contentDescription = "Profile Picture",
@@ -47,7 +48,7 @@ fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
             Spacer(modifier = Modifier.width(8.dp))
 
             Column {
-                Row {
+                Row(verticalAlignment = Alignment.CenterVertically){
                     Text(
                         text = "Hesen B.",
                         color = Color.Black,
@@ -55,17 +56,8 @@ fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
                     )
 
                     Spacer(modifier = Modifier.width(4.dp))
-                    Image(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = "Verified",
-                        modifier = Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xff1d9bf0))
-                            .padding(2.dp),
-                        colorFilter = ColorFilter
-                            .tint(Color.White)
-                    )
+                    VerifiedImage(modifier = Modifier.size(12.dp))
+
 
                     Spacer(modifier = Modifier.width(4.dp))
 
@@ -90,7 +82,7 @@ fun LazyColumnTypeSplitScreenItem(item: SplitScreenItem, isQuoteItem: Boolean) {
 
         Column(
             modifier = Modifier
-                .padding(top = 12.dp, start = if (isQuoteItem) 8.dp else 48.dp)
+                .padding(top = 12.dp, start = if (isQuoteItem) 0.dp else 48.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp)),
         ) {
