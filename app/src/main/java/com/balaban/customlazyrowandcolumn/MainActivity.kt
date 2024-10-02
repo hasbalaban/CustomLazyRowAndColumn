@@ -25,14 +25,12 @@ import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeAddIte
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeBannerItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeQuoteTweetItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeSplitScreenItem
-import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTextItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTweetItem
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
 import com.balaban.customlazyrowandcolumn.models.BannerScreenItem
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
-import com.balaban.customlazyrowandcolumn.models.TextItem
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.ui.theme.CustomLazyRowAndColumnTheme
 
@@ -109,11 +107,6 @@ fun ListWithDifferentContentTypes() {
         ) { index, item ->
 
             when (item.type) {
-                ContentTypes.TYPE_TEXT -> {
-                    Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeTextItem(item = item as TextItem)
-                    }
-                }
 
                 ContentTypes.TYPE_ADD_ITEM -> {
                     Box(modifier = Modifier.padding(start = 12.dp, end = 6.dp)) {
@@ -149,14 +142,13 @@ fun ListWithDifferentContentTypes() {
             if (index < list.size - 1 && !shouldShowBanner) {
                 HorizontalDivider(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp), color = Color.Gray.copy(alpha = 0.2f), thickness = 1.dp)
+                    .padding(vertical = 8.dp), color = Color.Gray.copy(alpha = 0.2f), thickness = 1.dp)
             }
         }
     }
 }
 
 enum class ContentTypes {
-    TYPE_TEXT,
     TYPE_ADD_ITEM,
     TYPE_SPLITTED_SCREEN,
     TYPE_BANNER_SCREEN,

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
@@ -62,13 +63,17 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
                         fontWeight = FontWeight.Bold
                     )
 
-                    Icon(
-                        imageVector = Icons.Filled.Check, // Replace with the verified icon
+
+                    Image(
+                        imageVector = Icons.Filled.Check,
                         contentDescription = "Verified",
-                        tint = Color.Blue,
                         modifier = Modifier
-                            .size(16.dp)
                             .padding(start = 4.dp)
+                            .size(16.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xff1d9bf0)).padding(2.dp),
+                        colorFilter = ColorFilter
+                            .tint(Color.White)
                     )
 
                     Text(
