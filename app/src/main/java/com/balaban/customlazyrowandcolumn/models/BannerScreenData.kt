@@ -2,7 +2,8 @@ package com.balaban.customlazyrowandcolumn.models
 
 import androidx.annotation.DrawableRes
 import com.balaban.customlazyrowandcolumn.ContentTypes
-import com.balaban.customlazyrowandcolumn.ItemType
+
+open class ItemType (val type: ContentTypes)
 
 data class TextItem(val text: String) : ItemType(ContentTypes.TYPE_TEXT)
 data class HeaderItem(val header: String, val description : String) : ItemType(ContentTypes.TYPE_HEADER)
