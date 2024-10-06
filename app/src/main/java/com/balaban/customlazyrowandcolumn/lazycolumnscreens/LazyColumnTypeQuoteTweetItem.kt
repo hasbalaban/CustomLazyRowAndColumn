@@ -1,6 +1,7 @@
 package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.balaban.customlazyrowandcolumn.ClickListeners
+import com.balaban.customlazyrowandcolumn.ContentTypes
 import com.balaban.customlazyrowandcolumn.R
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
@@ -29,9 +32,15 @@ import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
-fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
+fun LazyColumnTypeQuoteTweetItem(
+    item: QuoteTweetScreenItem,
+    setOnListeners: (ClickListeners) -> Unit
+) {
     Column(
         modifier = Modifier
+            .clickable {
+                setOnListeners.invoke(ClickListeners.ItemClickListener(item, 0))
+            }
             .fillMaxWidth()
             .padding(8.dp)
     ) {
@@ -92,7 +101,11 @@ fun LazyColumnTypeQuoteTweetItem(item: QuoteTweetScreenItem) {
                     list.add(R.drawable.image)
                 }
 
-                LazyColumnTypeSplitScreenItem(SplitScreenItem(list), isQuoteItem = true)
+                LazyColumnTypeSplitScreenItem(
+                    SplitScreenItem(list),
+                    isQuoteItem = true,
+                    setOnListeners
+                )
 
             }
 

@@ -2,6 +2,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -29,13 +30,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.balaban.customlazyrowandcolumn.ClickListeners
+import com.balaban.customlazyrowandcolumn.ContentTypes
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
-fun LazyColumnTypeTweetItem(item: TweetScreenItem) {
+fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListeners) -> Unit) {
     Column(
         modifier = Modifier
+            .clickable {
+                setOnListeners.invoke(ClickListeners.ItemClickListener(item, 0))
+            }
             .fillMaxWidth()
             .padding(8.dp)
     ) {

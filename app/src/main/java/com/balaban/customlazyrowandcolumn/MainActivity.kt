@@ -1,6 +1,8 @@
 package com.balaban.customlazyrowandcolumn
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeAddItem
@@ -40,6 +43,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CustomLazyRowAndColumnTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
                     MainScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
@@ -49,9 +53,54 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    Column(modifier = modifier){
-        ListWithDifferentContentTypes()
+    val context = LocalContext.current
+    val list by remember {
+        mutableStateOf(items.shuffled().shuffled())
     }
+
+    Column(modifier = modifier) {
+        ListWithDifferentContentTypes(
+            list = list,
+            setOnListeners = {
+            homeClickListeners(it, context = context)
+            }
+        )
+    }
+}
+
+private fun homeClickListeners(clickListenerType: ClickListeners, context: Context) {
+    when (clickListenerType) {
+        is ClickListeners.ItemClickListener -> {
+            when(clickListenerType.item){
+                is AddScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is SplitScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is TweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is QuoteTweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+            }
+        }
+
+        is ClickListeners.ItemLongClickListener -> {
+            when(clickListenerType.item){
+                is AddScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is SplitScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is TweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is QuoteTweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+            }
+        }
+
+        is ClickListeners.ItemClickListenerWithParams -> {
+            when(clickListenerType.item){
+                is AddScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is SplitScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is TweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+                is QuoteTweetScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " "))
+            }
+        }
+    }
+}
+
+private fun showToastMessage(context: Context, text : String){
+    Toast.makeText(context, text, Toast.LENGTH_LONG).show()
 }
 
 @Preview(showBackground = true)
@@ -60,17 +109,19 @@ fun GreetingPreview() {
     val item = AddScreenItem(image = R.drawable.image)
     CustomLazyRowAndColumnTheme {
         Column(modifier = Modifier.padding(12.dp)){
-            LazyColumnTypeAddItem(item)
+            LazyColumnTypeAddItem(item){
+
+            }
         }
     }
 }
 
 
-abstract class ViewHolder<T>()  {
-    var itemClickListener: ((item: ItemType, position: Int) -> Unit)? = null
-    var itemClickListenerWithView: ((item: ItemType, view: Int) -> Unit)? = null
-    var itemLongClickListener: ((item: ItemType, position: Int) -> Boolean)? = null
-    var itemClickListenerWithParams: ((item: ItemType, position: Int, obj:Any) -> Unit)? = null
+sealed class ClickListeners() {
+    data class ItemClickListener(val item: ItemType, val position: Int) : ClickListeners()
+    data class ItemLongClickListener(val item: ItemType, val position: Int) : ClickListeners()
+    data class ItemClickListenerWithParams(val item: ItemType, val position: Int, val obj: Any) :
+        ClickListeners()
 }
 
 
@@ -96,10 +147,11 @@ val items = listOf(
 )
 
 @Composable
-fun ListWithDifferentContentTypes() {
-    val list by remember {
-        mutableStateOf(items.shuffled().shuffled())
-    }
+fun ListWithDifferentContentTypes(
+    list : List<ItemType>,
+    setOnListeners:(ClickListeners) -> Unit
+) {
+
     LazyColumn{
         itemsIndexed(
             items = list,
@@ -110,7 +162,10 @@ fun ListWithDifferentContentTypes() {
 
                 ContentTypes.TYPE_ADD_ITEM -> {
                     Box(modifier = Modifier.padding(start = 12.dp, end = 6.dp)) {
-                        LazyColumnTypeAddItem(item = item as AddScreenItem)
+                        LazyColumnTypeAddItem(
+                            item = item as AddScreenItem,
+                            setOnListeners = setOnListeners
+                        )
                     }
                 }
 
@@ -118,19 +173,26 @@ fun ListWithDifferentContentTypes() {
                     Box(modifier = Modifier.padding(horizontal = 12.dp)) {
                         LazyColumnTypeSplitScreenItem(
                             item = item as SplitScreenItem,
-                            isQuoteItem = false
+                            isQuoteItem = false,
+                            setOnListeners = setOnListeners,
                         )
                     }
                 }
 
                 ContentTypes.TYPE_TWEET_SCREEN -> {
                     Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeTweetItem(item = item as TweetScreenItem)
+                        LazyColumnTypeTweetItem(
+                            item = item as TweetScreenItem,
+                            setOnListeners = setOnListeners,
+                        )
                     }
                 }
                 ContentTypes.TYPE_QUOTE_TWEET_SCREEN -> {
                     Box(modifier = Modifier.padding(horizontal = 12.dp)) {
-                        LazyColumnTypeQuoteTweetItem(item = item as QuoteTweetScreenItem)
+                        LazyColumnTypeQuoteTweetItem(
+                            item = item as QuoteTweetScreenItem,
+                            setOnListeners = setOnListeners
+                        )
                     }
                 }
             }

@@ -2,6 +2,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,20 +28,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.balaban.customlazyrowandcolumn.ClickListeners
+import com.balaban.customlazyrowandcolumn.ContentTypes
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
+import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import kotlin.random.Random
 
 @Composable
-fun LazyColumnTypeAddItem(item: AddScreenItem) {
+fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners) -> Unit) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
 
 
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()
+        .clickable {
+            setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType, 0))
+        }
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -56,13 +65,19 @@ fun LazyColumnTypeAddItem(item: AddScreenItem) {
             Spacer(modifier = Modifier.width(8.dp))
 
 
+            Text(
+                text = "Reuters ",
+                color = Color.Black,
+                fontWeight = FontWeight.Bold
+            )
 
             Text(
                 modifier = Modifier,
-                text = "Ads",
+                text = "· Ads",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Black,
-                fontSize = 16.sp
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
             )
         }
 
