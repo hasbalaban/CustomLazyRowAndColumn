@@ -8,10 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.AlertDialog
@@ -34,10 +37,13 @@ import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeAddIte
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeQuoteTweetItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeSplitScreenItem
 import com.balaban.customlazyrowandcolumn.lazycolumnscreens.LazyColumnTypeTweetItem
+import com.balaban.customlazyrowandcolumn.lazycolumnscreens.RecommendedAccountsScreen
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
+import com.balaban.customlazyrowandcolumn.models.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.ContentTypes
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
+import com.balaban.customlazyrowandcolumn.models.RecommendedAccountsItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.getItems
@@ -51,7 +57,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             CustomLazyRowAndColumnTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
                     MainScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
@@ -60,15 +65,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(
-    modifier: Modifier = Modifier
-) {
+fun MainScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val list by remember {
-        mutableStateOf(getItems().shuffled().shuffled())
-    }
-
-
+    val list by remember { mutableStateOf(getItems()) }
     var confirmText by remember { mutableStateOf("") }
 
     val properties by remember {
@@ -88,24 +87,27 @@ fun MainScreen(
             },
             confirmButton = {
                 Text(
+                    text = "confirmText",
                     modifier = Modifier.clickable {
                         confirmText = ""
-                    },
-                    text = "confirmText")
+                    }
+                )
             },
             dismissButton = {
                 Text(
+                    text = "dismissText",
                     modifier = Modifier.clickable {
                         confirmText = ""
-                    },
-                    text = "dismissText")
+                    }
+                )
             },
             text = {
                 Text(
+                    text = confirmText,
                     modifier = Modifier.clickable {
                         confirmText = ""
-                    },
-                    text = confirmText)
+                    }
+                )
             },
             properties = properties
         )
@@ -115,7 +117,7 @@ fun MainScreen(
     Column(modifier = modifier) {
         ListWithDifferentContentTypes(
             list = list,
-            setOnListeners = {clickListenerType ->
+            setOnListeners = { clickListenerType ->
                 when (clickListenerType) {
                     is ClickListeners.ItemClickListener -> {
                         confirmText = when(clickListenerType.item){
@@ -128,7 +130,6 @@ fun MainScreen(
                     }
 
                     is ClickListeners.ItemLongClickListener -> {
-                        confirmText = ""
                         when(clickListenerType.item){
                             is AddScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " ") + " ItemLongClickListener")
                             is SplitScreenItem -> showToastMessage(context = context, text = clickListenerType.item.type.toString().replace("_", " ") + " ItemLongClickListener")
@@ -142,17 +143,8 @@ fun MainScreen(
     }
 }
 
-
-private fun homeClickListeners(clickListenerType: ClickListeners, context: Context) {
-}
-
-private fun showToastMessage(context: Context, text: String) =
+private fun showToastMessage(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-
-
-sealed class ClickListeners() {
-    data class ItemClickListener(val item: ItemType) : ClickListeners()
-    data class ItemLongClickListener(val item: ItemType) : ClickListeners()
 }
 
 @Composable
@@ -161,10 +153,12 @@ fun ListWithDifferentContentTypes(
     setOnListeners:(ClickListeners) -> Unit
 ) {
 
-    LazyColumn{
+    LazyColumn(
+        modifier = Modifier
+    ) {
         itemsIndexed(
             items = list,
-            key = {_, item ->
+            key = { _, item ->
                 item.id
             },
             contentType = { _, item -> item.type },
@@ -176,17 +170,25 @@ fun ListWithDifferentContentTypes(
             )
 
             if (index < list.size - 1) {
-                HorizontalDivider(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp), color = Color.Gray.copy(alpha = 0.2f), thickness = 1.dp)
+                HorizontalDivider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    color = Color.Gray.copy(alpha = 0.2f),
+                    thickness = 1.dp
+                )
             }
         }
     }
+
 }
 
 
 @Composable
-private fun ScreenHolder(item: ItemType, setOnListeners: (ClickListeners) -> Unit) {
+private fun ScreenHolder(
+    item: ItemType,
+    setOnListeners: (ClickListeners) -> Unit
+) {
     when (item.type) {
 
         ContentTypes.TYPE_ADD_ITEM -> {
@@ -220,6 +222,15 @@ private fun ScreenHolder(item: ItemType, setOnListeners: (ClickListeners) -> Uni
             Box(modifier = Modifier.padding(horizontal = 12.dp)) {
                 LazyColumnTypeQuoteTweetItem(
                     item = item as QuoteTweetScreenItem,
+                    setOnListeners = setOnListeners
+                )
+            }
+        }
+
+        ContentTypes.RECOMMENDED_ACCOUNTS -> {
+            Box(modifier = Modifier) {
+                RecommendedAccountsScreen(
+                    item = item as RecommendedAccountsItem,
                     setOnListeners = setOnListeners
                 )
             }

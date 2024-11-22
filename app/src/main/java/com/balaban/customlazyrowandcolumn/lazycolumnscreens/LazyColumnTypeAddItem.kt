@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,49 +33,39 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
+import com.balaban.customlazyrowandcolumn.models.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import kotlin.random.Random
 
 @Composable
-fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners) -> Unit) {
-    val scrollState = rememberScrollState()
+fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners: (ClickListeners) -> Unit) {
+    rememberScrollState()
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .pointerInput(Unit) {
-        detectTapGestures(
-            onLongPress = {
-                setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
-            },
-            onTap = {
-                setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
-            }
-        )
-    }
+            detectTapGestures(
+                onLongPress = {
+                    setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                },
+                onTap = {
+                    setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                }
+            )
+        }
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 imageVector = Icons.Filled.AccountCircle, // Replace with the logo
                 contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
+                modifier = Modifier.size(40.dp).clip(CircleShape)
             )
 
             Spacer(modifier = Modifier.width(8.dp))
-
-
-            Text(
-                text = "Reuters ",
-                color = Color.Black,
-                fontWeight = FontWeight.Bold
-            )
-
+            Text(text = "Reuters ", color = Color.Black, fontWeight = FontWeight.Bold)
             Text(
                 modifier = Modifier,
                 text = "· Ads",
@@ -85,39 +76,35 @@ fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners)
             )
         }
 
-
         Row(
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .horizontalScroll(state = scrollState)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
 
-            for (i in 0..Random.nextInt(6, 10)) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            LazyRow {
+                items(
+                    count = Random.nextInt(6, 10)
                 ) {
-                    Image(
-                        painter = painterResource(id = item.image),
-                        contentDescription = "Genkai Warrior Hoodie",
+                    Column(
                         modifier = Modifier
-                            .width(width = 250.dp)
-                    )
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 16.dp),
-                        text = "Limited Edition Genkai Warrior Hoodie ",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "CyberKongz x 9dcc",
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                            .fillMaxWidth()
+                            .padding(end = 12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            painter = painterResource(id = item.image),
+                            contentDescription = "Genkai Warrior Hoodie",
+                            modifier = Modifier.width(width = 250.dp)
+                        )
+                        Text(
+                            modifier = Modifier.padding(top = 16.dp),
+                            text = "Limited Edition Genkai Warrior Hoodie ",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(text = "CyberKongz x 9dcc", style = MaterialTheme.typography.bodySmall)
+                    }
                 }
             }
         }
@@ -125,8 +112,7 @@ fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners)
         Button(
             onClick = {
                 Toast.makeText(context, "clicked", Toast.LENGTH_LONG).show()
-            },
-            modifier = Modifier
+            }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 12.dp)
         ) {
