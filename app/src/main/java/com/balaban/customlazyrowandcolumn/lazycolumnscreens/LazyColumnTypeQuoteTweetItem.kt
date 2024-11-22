@@ -1,7 +1,6 @@
 package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,8 +24,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.ClickListeners
 import com.balaban.customlazyrowandcolumn.R
+import com.balaban.customlazyrowandcolumn.models.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
@@ -40,6 +39,8 @@ fun LazyColumnTypeQuoteTweetItem(
 ) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
@@ -50,45 +51,25 @@ fun LazyColumnTypeQuoteTweetItem(
                     }
                 )
             }
-            .fillMaxWidth()
-            .padding(8.dp)
     ) {
-        // Header Row
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             ProfileItem()
-
             Spacer(modifier = Modifier.width(8.dp))
 
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "Hesen B.",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-
+                    Text(text = "Hesen B.", color = Color.Black, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
-
                     VerifiedImage(modifier = Modifier.size(16.dp))
-
                     Spacer(modifier = Modifier.width(4.dp))
-
-                    Text(
-                        text = "@hesenblbn101 · 2m",
-                        color = Color.Gray,
-                        fontSize = 12.sp
-                    )
+                    Text(text = "@hesenblbn101 · 2m", color = Color.Gray, fontSize = 12.sp)
                 }
-
-                Text(
-                    text = "Let's look this tweet",
-                    color = Color.Black
-                )
+                Text(text = "Let's look this tweet", color = Color.Black)
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
-
-
         Column(
             modifier = Modifier
                 .padding(start = 40.dp)
@@ -101,24 +82,13 @@ fun LazyColumnTypeQuoteTweetItem(
                     .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp, 12.dp, 0.dp, 0.dp))
                     .padding(top = 12.dp)
             ) {
-
-                val list by remember {
-                    mutableStateOf(mutableListOf<Int>())
-                }
-
-                for (i in 0..<item.imageList.size) {
-                    list.add(R.drawable.image)
-                }
-
+                val list by remember { mutableStateOf(List(item.imageList.size) { R.drawable.image }) }
                 LazyColumnTypeSplitScreenItem(
-                    SplitScreenItem(list, -1),
+                    SplitScreenItem(list, 0),
                     isQuoteItem = true,
                     setOnListeners
                 )
-
             }
-
-
         }
     }
 }

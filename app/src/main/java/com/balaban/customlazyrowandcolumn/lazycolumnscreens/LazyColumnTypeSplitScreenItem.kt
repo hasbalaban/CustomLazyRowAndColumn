@@ -1,7 +1,6 @@
 package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.ClickListeners
+import com.balaban.customlazyrowandcolumn.models.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.scren.ProfileItem
@@ -54,45 +53,28 @@ fun LazyColumnTypeSplitScreenItem(
                     }
                 )
             }
-    ){
+    ) {
 
         Row(
             modifier = Modifier.padding(start = if (isQuoteItem) 12.dp else 0.dp),
             verticalAlignment = Alignment.CenterVertically) {
 
             ProfileItem()
-
             Spacer(modifier = Modifier.width(8.dp))
-
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically){
-                    Text(
-                        text = "Hesen B.",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-
+                    Text(text = "Hesen B.", color = Color.Black, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.width(4.dp))
                     VerifiedImage(modifier = Modifier.size(12.dp))
-
-
                     Spacer(modifier = Modifier.width(4.dp))
-
-                    Text(
-                        text = "@hesenblbn101 · 2m",
-                        color = Color.Gray,
-                        fontSize = 12.sp
-                    )
-
+                    Text(text = "@hesenblbn101 · 2m", color = Color.Gray, fontSize = 12.sp)
                 }
                 Text(
                     text = "this is my favorite photo...",
                     color = Color.Black
                 )
             }
-
         }
-
 
         Column(
             modifier = Modifier
@@ -121,7 +103,6 @@ fun LazyColumnTypeSplitScreenItem(
                     }
                 }
             }
-
         }
     }
 }

@@ -2,7 +2,6 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.ClickListeners
+import com.balaban.customlazyrowandcolumn.models.ClickListeners
 import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
@@ -41,6 +40,8 @@ import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListeners) -> Unit) {
     Column(
         modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
@@ -51,33 +52,21 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListene
                     }
                 )
             }
-            .fillMaxWidth()
-            .padding(8.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
             Image(
-                imageVector = Icons.Filled.AccountCircle, // Replace with the logo
+                imageVector = Icons.Filled.AccountCircle,
                 contentDescription = "CNBC-e Logo",
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
+                modifier = Modifier.size(40.dp).clip(CircleShape)
             )
 
             Spacer(modifier = Modifier.width(8.dp))
-
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "CNBC-e",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-
-
+                    Text(text = "CNBC-e", color = Color.Black, fontWeight = FontWeight.Bold)
                     VerifiedImage(modifier = Modifier.size(16.dp))
-
                     Text(
                         text = "@cnbceofficial · 1h",
                         color = Color.Gray,
@@ -91,10 +80,7 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListene
                     color = Color.Black,
                     modifier = Modifier.padding(top = 4.dp)
                 )
-
-
                 Spacer(modifier = Modifier.height(8.dp))
-
                 Box(
                     modifier = Modifier
                         .height(IntrinsicSize.Min)
@@ -107,33 +93,21 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListene
                             imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
                             contentDescription = "Image Placeholder",
                             tint = Color.Black.copy(0.5f),
-                            modifier = Modifier
-                                .padding(24.dp)
-                                .size(32.dp)
+                            modifier = Modifier.padding(24.dp).size(32.dp)
                         )
 
-                        VerticalDivider(
-                            modifier = Modifier.fillMaxHeight(),
-                            color = Color.LightGray
-                        )
-
+                        VerticalDivider(modifier = Modifier.fillMaxHeight(), color = Color.LightGray)
                         Spacer(modifier = Modifier.width(8.dp))
-
                         Column(modifier = Modifier.padding(top = 16.dp)) {
                             Text(
                                 text = "ECB/Guindos: Euro Bölgesi'nde toparlanma z...",
                                 color = Color.Black
                             )
-                            Text(
-                                text = "cnbce.com",
-                                color = Color.Gray,
-                                fontSize = 12.sp
-                            )
+                            Text(text = "cnbce.com", color = Color.Gray, fontSize = 12.sp)
                         }
                     }
                 }
             }
         }
-
     }
 }
