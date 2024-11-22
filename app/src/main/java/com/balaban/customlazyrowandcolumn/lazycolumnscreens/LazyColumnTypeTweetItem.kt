@@ -3,6 +3,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -28,10 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.ClickListeners
-import com.balaban.customlazyrowandcolumn.ContentTypes
+import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
@@ -39,8 +41,15 @@ import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListeners) -> Unit) {
     Column(
         modifier = Modifier
-            .clickable {
-                setOnListeners.invoke(ClickListeners.ItemClickListener(item, 0))
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = {
+                        setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                    },
+                    onTap = {
+                        setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                    }
+                )
             }
             .fillMaxWidth()
             .padding(8.dp)

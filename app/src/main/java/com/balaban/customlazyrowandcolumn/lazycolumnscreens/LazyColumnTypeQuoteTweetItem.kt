@@ -2,6 +2,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.ClickListeners
-import com.balaban.customlazyrowandcolumn.ContentTypes
 import com.balaban.customlazyrowandcolumn.R
+import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.scren.ProfileItem
@@ -38,8 +40,15 @@ fun LazyColumnTypeQuoteTweetItem(
 ) {
     Column(
         modifier = Modifier
-            .clickable {
-                setOnListeners.invoke(ClickListeners.ItemClickListener(item, 0))
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = {
+                        setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                    },
+                    onTap = {
+                        setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                    }
+                )
             }
             .fillMaxWidth()
             .padding(8.dp)
@@ -102,7 +111,7 @@ fun LazyColumnTypeQuoteTweetItem(
                 }
 
                 LazyColumnTypeSplitScreenItem(
-                    SplitScreenItem(list),
+                    SplitScreenItem(list, -1),
                     isQuoteItem = true,
                     setOnListeners
                 )
