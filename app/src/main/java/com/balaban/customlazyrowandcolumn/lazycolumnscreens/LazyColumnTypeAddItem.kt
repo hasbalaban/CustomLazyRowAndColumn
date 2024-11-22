@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,16 +45,15 @@ fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners)
     Column(modifier = Modifier
         .fillMaxWidth()
         .pointerInput(Unit) {
-        detectTapGestures(
-            onLongPress = {
-                setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
-            },
-            onTap = {
-                setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
-            }
-        )
-    }
-    ) {
+            detectTapGestures(
+                onLongPress = {
+                    setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                },
+                onTap = {
+                    setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                }
+            )
+        }) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -90,34 +90,37 @@ fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners)
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .horizontalScroll(state = scrollState)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
 
-            for (i in 0..Random.nextInt(6, 10)) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(id = item.image),
-                        contentDescription = "Genkai Warrior Hoodie",
+            LazyRow{
+                items(
+                    count = Random.nextInt(6, 10)
+                ){
+                    Column(
                         modifier = Modifier
-                            .width(width = 250.dp)
-                    )
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 16.dp),
-                        text = "Limited Edition Genkai Warrior Hoodie ",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "CyberKongz x 9dcc",
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                            .fillMaxWidth()
+                            .padding(end = 12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            painter = painterResource(id = item.image),
+                            contentDescription = "Genkai Warrior Hoodie",
+                            modifier = Modifier
+                                .width(width = 250.dp)
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(top = 16.dp),
+                            text = "Limited Edition Genkai Warrior Hoodie ",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(
+                            text = "CyberKongz x 9dcc",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
                 }
             }
         }
