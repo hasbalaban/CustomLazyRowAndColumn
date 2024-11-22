@@ -3,6 +3,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,29 +26,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.balaban.customlazyrowandcolumn.ClickListeners
-import com.balaban.customlazyrowandcolumn.ContentTypes
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
 import com.balaban.customlazyrowandcolumn.models.ItemType
-import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import kotlin.random.Random
 
 @Composable
 fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners) -> Unit) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-
-
-
-    Column(modifier = Modifier.fillMaxWidth()
-        .clickable {
-            setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType, 0))
-        }
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .pointerInput(Unit) {
+        detectTapGestures(
+            onLongPress = {
+                setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+            },
+            onTap = {
+                setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+            }
+        )
+    }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -90,7 +94,8 @@ fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners : (ClickListeners)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            for (i in 0..Random.nextInt(2, 10)) {
+
+            for (i in 0..Random.nextInt(6, 10)) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
