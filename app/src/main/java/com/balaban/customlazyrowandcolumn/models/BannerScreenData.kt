@@ -81,43 +81,43 @@ fun getItems(): List<ItemType> {
                 RecommendedAccountsItem(
                     listOf(
                         User(
-                            username = "Ahmet Yılmaz",
-                            userHandle = "ahmetyilmaz",
+                            username = "Hasan Balaban-1",
+                            userHandle = "hasbalaban1",
                             profilePictureUrl = "https://www.example.com/profile1.jpg",
                             isFollowing = false
                         ),
                         User(
-                            username = "Emine Kızıl",
-                            userHandle = "eminekizil",
+                            username = "Hasan Balaban-2",
+                            userHandle = "hasbalaban2",
                             profilePictureUrl = "https://www.example.com/profile2.jpg",
                             isFollowing = true
                         ),
                         User(
-                            username = "Selin Çelik",
-                            userHandle = "selincelik",
+                            username = "Hasan Balaban-3",
+                            userHandle = "hasbalaban3",
                             profilePictureUrl = "https://www.example.com/profile3.jpg",
                             isFollowing = false
                         )
                     ),
-                    id = ++size
+                    id = size++
                 ),
                 RecommendedAccountsItem(
                     listOf(
                         User(
-                            username = "Ahmet Yılmaz",
-                            userHandle = "ahmetyilmaz",
+                            username = "Hasan Balaban-1",
+                            userHandle = "hasbalaban1",
                             profilePictureUrl = "https://www.example.com/profile1.jpg",
                             isFollowing = false
                         ),
                         User(
-                            username = "Emine Kızıl",
-                            userHandle = "eminekizil",
+                            username = "Hasan Balaban-2",
+                            userHandle = "hasbalaban2",
                             profilePictureUrl = "https://www.example.com/profile2.jpg",
                             isFollowing = true
                         ),
                         User(
-                            username = "Selin Çelik",
-                            userHandle = "selincelik",
+                            username = "Hasan Balaban-3",
+                            userHandle = "hasbalaban3",
                             profilePictureUrl = "https://www.example.com/profile3.jpg",
                             isFollowing = false
                         )
