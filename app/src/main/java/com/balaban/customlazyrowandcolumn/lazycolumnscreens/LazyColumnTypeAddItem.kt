@@ -2,9 +2,7 @@ package com.balaban.customlazyrowandcolumn.lazycolumnscreens
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,24 +30,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.balaban.customlazyrowandcolumn.LazyViewManager
 import com.balaban.customlazyrowandcolumn.models.AddScreenItem
-import com.balaban.customlazyrowandcolumn.models.ClickListeners
-import com.balaban.customlazyrowandcolumn.models.ItemType
 import kotlin.random.Random
 
 @Composable
-fun LazyColumnTypeAddItem(item: AddScreenItem, setOnListeners: (ClickListeners) -> Unit) {
-    rememberScrollState()
+fun LazyViewManager.LazyColumnTypeAddItem(item: AddScreenItem) {
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .pointerInput(Unit) {
             detectTapGestures(
                 onLongPress = {
-                    setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                    itemLongClickListener?.invoke(item)
                 },
                 onTap = {
-                    setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                    itemClickListener?.invoke(item)
                 }
             )
         }

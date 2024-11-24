@@ -31,13 +31,12 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.models.ClickListeners
-import com.balaban.customlazyrowandcolumn.models.ItemType
+import com.balaban.customlazyrowandcolumn.LazyViewManager
 import com.balaban.customlazyrowandcolumn.models.TweetScreenItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
-fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListeners) -> Unit) {
+fun LazyViewManager.LazyColumnTypeTweetItem(item: TweetScreenItem) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,10 +44,10 @@ fun LazyColumnTypeTweetItem(item: TweetScreenItem, setOnListeners: (ClickListene
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                        itemLongClickListener?.invoke(item)
                     },
                     onTap = {
-                        setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                        itemClickListener?.invoke(item)
                     }
                 )
             }
