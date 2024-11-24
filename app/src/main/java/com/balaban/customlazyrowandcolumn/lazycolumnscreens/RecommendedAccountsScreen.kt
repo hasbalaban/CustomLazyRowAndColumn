@@ -33,26 +33,24 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.balaban.customlazyrowandcolumn.models.ClickListeners
-import com.balaban.customlazyrowandcolumn.models.ItemType
+import com.balaban.customlazyrowandcolumn.LazyViewManager
 import com.balaban.customlazyrowandcolumn.models.RecommendedAccountsItem
 import com.balaban.customlazyrowandcolumn.models.User
 
 
 @Composable
-fun RecommendedAccountsScreen(
-    item: RecommendedAccountsItem,
-    setOnListeners: (ClickListeners) -> Unit
+fun LazyViewManager.RecommendedAccountsScreen(
+    item: RecommendedAccountsItem
 ) {
 
     Column(modifier = Modifier
         .pointerInput(Unit) {
             detectTapGestures(
                 onLongPress = {
-                    setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                    itemLongClickListener?.invoke(item)
                 },
                 onTap = {
-                    setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                    itemClickListener?.invoke(item)
                 }
             )
         }
@@ -152,10 +150,9 @@ fun PreviewRecommendedAccounts() {
             isFollowing = false
         )
     )
-    RecommendedAccountsScreen(
-        item = RecommendedAccountsItem(recommendedUsers = users, 0),
-        setOnListeners = { _ -> }
+    val lazyViewManager by remember { mutableStateOf(LazyViewManager()) }
+    lazyViewManager.RecommendedAccountsScreen(
+        item = RecommendedAccountsItem(recommendedUsers = users, 0)
     )
-
 }
 

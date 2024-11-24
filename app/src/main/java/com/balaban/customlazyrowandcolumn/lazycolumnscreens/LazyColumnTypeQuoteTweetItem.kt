@@ -24,18 +24,16 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.balaban.customlazyrowandcolumn.LazyViewManager
 import com.balaban.customlazyrowandcolumn.R
-import com.balaban.customlazyrowandcolumn.models.ClickListeners
-import com.balaban.customlazyrowandcolumn.models.ItemType
 import com.balaban.customlazyrowandcolumn.models.QuoteTweetScreenItem
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
-fun LazyColumnTypeQuoteTweetItem(
-    item: QuoteTweetScreenItem,
-    setOnListeners: (ClickListeners) -> Unit
+fun LazyViewManager.LazyColumnTypeQuoteTweetItem(
+    item: QuoteTweetScreenItem
 ) {
     Column(
         modifier = Modifier
@@ -44,10 +42,10 @@ fun LazyColumnTypeQuoteTweetItem(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                        itemLongClickListener?.invoke(item)
                     },
                     onTap = {
-                        setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                        itemClickListener?.invoke(item)
                     }
                 )
             }
@@ -85,8 +83,7 @@ fun LazyColumnTypeQuoteTweetItem(
                 val list by remember { mutableStateOf(List(item.imageList.size) { R.drawable.image }) }
                 LazyColumnTypeSplitScreenItem(
                     SplitScreenItem(list, 0),
-                    isQuoteItem = true,
-                    setOnListeners
+                    isQuoteItem = true
                 )
             }
         }

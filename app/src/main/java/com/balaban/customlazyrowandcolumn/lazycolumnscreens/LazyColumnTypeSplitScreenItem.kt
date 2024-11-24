@@ -27,17 +27,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.balaban.customlazyrowandcolumn.models.ClickListeners
-import com.balaban.customlazyrowandcolumn.models.ItemType
+import com.balaban.customlazyrowandcolumn.LazyViewManager
 import com.balaban.customlazyrowandcolumn.models.SplitScreenItem
 import com.balaban.customlazyrowandcolumn.scren.ProfileItem
 import com.balaban.customlazyrowandcolumn.scren.VerifiedImage
 
 @Composable
-fun LazyColumnTypeSplitScreenItem(
+fun LazyViewManager.LazyColumnTypeSplitScreenItem(
     item: SplitScreenItem,
-    isQuoteItem: Boolean,
-    setOnListeners: (ClickListeners) -> Unit
+    isQuoteItem: Boolean = false
 ) {
     val chunkedList by remember { mutableStateOf(item.imageList.chunked(2)) }
 
@@ -46,10 +44,10 @@ fun LazyColumnTypeSplitScreenItem(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        setOnListeners.invoke(ClickListeners.ItemLongClickListener(item as ItemType))
+                        itemLongClickListener?.invoke(item)
                     },
                     onTap = {
-                        setOnListeners.invoke(ClickListeners.ItemClickListener(item as ItemType))
+                        itemClickListener?.invoke(item)
                     }
                 )
             }
